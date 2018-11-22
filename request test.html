@@ -1,24 +1,40 @@
 <!DOCTYPE html>
+<html ng-app='app'>
 <head>
 	<script src="https://d3js.org/d3.v5.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
 	<script>
-		function loadXMLDoc() {
-		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-			document.getElementById("demo").innerHTML = this.responseText;
-			}
-		};
-		xhttp.open("GET", "https://api.github.com/users/kinselc3", true);
-		xhttp.send();
-		}
+	var app= angular.module('app', []);
+		app.controller('MainCtrl', function($http){
+			var vm = this;
+			vm.data=false;
+			vm.fetchData = function(user){
+				vm.loading = true;
+				$http.get('https://api.github.com/users/' + user.name).then(function(res){
+				
+					vm.data=true;
+					vm.name=res.data.name;
+					vm.photo=res.data.avatar_url;
+					vm.location=res.data.location;
+					vm.following=res.data.following;
+					vm.followers=res.data.followers;
+					vm.public_repos=res.data.public_repos;
+					vm.email=res.data.email;
+					vm.id=res.data.id;
+					vm.login=res.data.login;
+					vm.loading=false;
+					
+					
+				})
+				}
+			})
+		
 	</script>
 </head>
 
 <body>
 <div id = "demo">
-<script>loadXMLDoc()</script>
+<img ng-src = {{vm.photo}}>
 </div>
 </body>
 

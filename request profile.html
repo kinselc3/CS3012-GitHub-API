@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<head>
+	<script src="https://d3js.org/d3.v5.min.js"></script>
+	<script>
+		function loadXMLDoc() {
+			var x = document.getElementById("userInput").value;
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) 
+				{
+					document.getElementById("json").innerHTML = this.responseText;
+					parseJson(this.responseText);
+				}
+			};
+			xhttp.open("GET", "https://api.github.com/users/" + x, true);
+			xhttp.send();
+			
+			//parseJson(xhttp.responseText);
+		}
+	</script>
+	<script>
+		function parseJson(xhttp){
+		//var x = document.getElementById("json").innerHTML;
+		var obj = JSON.parse(xhttp);
+		//document.getElementById("table").innerHTML = obj.login;
+		//document.getElementById("pic").src = obj.avatar_url
+		}
+	</script>
+</head>
+
+<body>
+<div>
+
+User name:
+<br>
+	<input type="text" name="username" value="kinselc3" id ="userInput">
+<br>
+	<button  onclick= "loadXMLDoc()">Run</button>
+</div>
+<div id = "json">
+</div>
+<div id = "table">
+
+</div>
+</body>
