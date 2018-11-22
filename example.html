@@ -1,8 +1,47 @@
 <!DOCTYPE html>
-<head>
-	<script src="https://d3js.org/d3.v5.min.js"></script>
+<meta charset="utf-8">
+<style>
+
+.chart div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+}
+
+</style>
+<div class="chart"></div>
+<script src="d3.js"></script>
+<script>
+
+var ids = [];
+var followers=[];
+var names = [];
+
+
+
+
+function addElement(obj){
+	ids.push(obj)
 	
-	<script>
+	var x = d3.scaleLinear()
+    .domain([0, d3.max(ids)])
+    .range([0, 420]);
+
+d3.select(".chart")
+  .selectAll("div")
+    .data(ids)
+  .enter().append("div")
+    .style("width", function(d) { return x(d) + "px"; })
+    .text(function(d) { return d; });
+}
+</script>
+
+<script src="https://d3js.org/d3.v5.min.js"></script>
+	
+<script>
 		function loadXMLDoc() {
 			var x = document.getElementById("userInput").value;
 			var xhttp = new XMLHttpRequest();
@@ -12,6 +51,7 @@
 					//document.getElementById("json").innerHTML = this.responseText;
 					//tabulate(this.responseText, ['login','public_repos'])
 					tableIt(this.responseText);
+					
 				}
 			};
 			xhttp.open("GET", "https://api.github.com/users/" + x, true);
@@ -30,15 +70,9 @@
 		var repos = newRow.insertCell(1);
 		login.innerHTML = obj.login;
 		repos.innerHTML = obj.public_repos;
+		addElement(obj.public_repos);
 	}
-	</script>
-	
-	<script>
-	
-
-	</script>
-
-	
+	</script>	
 </head>
 
 <body>
@@ -55,6 +89,8 @@ User name:
 	<tr>
 		<th>login</th>
 		<th>commits</th>
+		<th></th>
+		<th></th>
 	</tr>
 </table>
 </div>
