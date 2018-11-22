@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
 	<script src="https://d3js.org/d3.v5.min.js"></script>
+	
 	<script>
 		function loadXMLDoc() {
 			var x = document.getElementById("userInput").value;
@@ -8,23 +9,39 @@
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) 
 				{
-					document.getElementById("json").innerHTML = this.responseText;
-					parseJson(this.responseText);
+					//document.getElementById("json").innerHTML = this.responseText;
+					//parseJson(this.responseText);
+					//tabulate(this.responseText, ['login','public_repos'])
+					tableIt(this.responseText);
 				}
 			};
 			xhttp.open("GET", "https://api.github.com/users/" + x, true);
 			xhttp.send();
 			
-			//parseJson(xhttp.responseText);
+			
 		}
 	</script>
 	<script>
 		function parseJson(xhttp){
 		//var x = document.getElementById("json").innerHTML;
 		var obj = JSON.parse(xhttp);
-		//document.getElementById("table").innerHTML = obj.login;
-		//document.getElementById("pic").src = obj.avatar_url
+		document.getElementById('table').innerHTML = obj.login;
+		var x = obj.avatar_url;
+		console.log(x);
+		//document.getElementById('pic') = x;
 		}
+	</script>
+	
+	<script>
+	function tableIt(xhttp) {
+		var obj = JSON.parse(xhttp);
+		var x = document.getElementById("table");
+		var newRow = x.insertRow(1);
+		var login = newRow.insertCell(0);
+		var repos = newRow.insertCell(1);
+		login.innerHTML = obj.login;
+		repos.innerHTML = obj.public_repos;
+	}
 	</script>
 </head>
 
@@ -38,8 +55,11 @@ User name:
 	<button  onclick= "loadXMLDoc()">Run</button>
 </div>
 <div id = "json">
-</div>
-<div id = "table">
-
+<table id = "table">
+	<tr>
+		<th>login</th>
+		<th>commits</th>
+	</tr>
+</table>
 </div>
 </body>
