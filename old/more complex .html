@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<script src="d3.js"></script>
 <style>
 
 .chart div {
@@ -12,8 +13,8 @@
 }
 
 </style>
-<div class="chart"></div>
-<script src="d3.js"></script>
+
+
 <script>
 
 var ids = [];
@@ -24,18 +25,13 @@ var names = [];
 
 
 function addElement(obj){
-	ids.push(obj)
+	ids.push(obj.public_repos);
 	
-	var x = d3.scaleLinear()
-    .domain([0, d3.max(ids)])
-    .range([0, 420]);
-
-d3.select(".chart")
-  .selectAll("div")
-    .data(ids)
-  .enter().append("div")
-    .style("width", function(d) { return x(d) + "px"; })
-    .text(function(d) { return d; });
+var graph = d3.select(".chart")
+   .append("svg")
+   .attr("width", 5)
+   .attr("height",d3.max(ids));
+   
 }
 </script>
 
@@ -62,15 +58,38 @@ d3.select(".chart")
 	</script>
 	
 	<script>
+	var tableids = [];
 	function tableIt(xhttp) {
 		var obj = JSON.parse(xhttp);
-		var x = document.getElementById("table");
-		var newRow = x.insertRow(1);
-		var login = newRow.insertCell(0);
-		var repos = newRow.insertCell(1);
-		login.innerHTML = obj.login;
-		repos.innerHTML = obj.public_repos;
-		addElement(obj.public_repos);
+		var intable = true;
+		for(var i = 0; i<=tableids.length;i++)
+		{
+			if(tableids[i]==obj.id)
+			{
+				intable = true;
+				console.log(obj.id);
+				break;
+			}
+			else
+			{
+				intable = false;
+			}
+			
+		}
+		//console.log(obj.id);
+		//console.log(tableids);
+		//console.log(intable);
+		if(intable == false)
+		{
+			tableids.push(obj.id);
+			var x = document.getElementById("table");
+			var newRow = x.insertRow(1);
+			var login = newRow.insertCell(0);
+			var repos = newRow.insertCell(1);
+			login.innerHTML = obj.login;
+			repos.innerHTML = obj.public_repos;
+			addElement(obj);
+		}
 	}
 	</script>	
 </head>
@@ -94,4 +113,6 @@ User name:
 	</tr>
 </table>
 </div>
+<div class="chart"></div>
+
 </body>
