@@ -1,24 +1,13 @@
 function loadXMLDoc(){
 	var input = document.getElementById("userInput").value;
-	//console.log(input);
-	var xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function() {
-				if (this.readyState == 4 && this.status == 200) 
-				{
-					//document.getElementById("json").innerHTML = this.responseText;
-					//tabulate(this.responseText, ['login','public_repos'])
-					console.log(this.responseText);
-					loadBaiscInfo(this.responseText);
-					mutualFollowers(this.responseText);
-				}
-			};
-			xhttp.open("GET", "https://api.github.com/users/" + input, true);
-			xhttp.send();
+	var output =retrieveJson("https://api.github.com/users/"+input);
+	console.log(output);
+	loadBaiscInfo(output);
+	listFollowers(retrieveJson(output.followers_url));
 }
 
-function loadBaiscInfo(jsonText){
-	//take the info we want from the JSON and turn it into variables
-	var obj = JSON.parse(jsonText);
+function loadBaiscInfo(obj){
+
 	var login = obj.login;
 	var avatar_url = obj.avatar_url;
 	var public_repos = obj.public_repos;
