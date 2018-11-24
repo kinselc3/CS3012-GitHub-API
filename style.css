@@ -31,9 +31,16 @@
 }
 body{
 	background-color: Thistle;
-    max-width: 500px;
+    max-width:70%;
     margin: auto;
 	
     background-repeat: no-repeat;
     background-size: cover;
+}
+.timeline{
+	background-color:white;
+}
+
+svg rect {
+   fill: purple;
 }

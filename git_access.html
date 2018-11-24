@@ -4,7 +4,7 @@
 <script src="loadXML.js"></script>
 <script src="graph.js"></script>
 <script src="followers.js"></script>
-<script src="timeline.js"></script>
+<script src="commitHistory.js"></script>
 <script src="retrieveJson.js"></script>
 <link rel="stylesheet" href="style.css">
 
@@ -16,20 +16,20 @@
 		<div id = "wrapping">
 		<div id = "heading">
 			CS3012 Github API<br>
-			Enter username<br>
-			<input type="text" name="username" value="kinselc3" id ="userInput">
+			Enter a username to send a query to the Github API, then click on a follower's profile to quickly query their username<br>
+			<input type="text" name="username" value="" id ="userInput">
 			<button  onclick= "loadXMLDoc()">Go!</button>
 		</div>
-	
+		
 		<div id = "basic info">
 		</div>
 		
-		<div id = "mutals_table">
+		<div class = "timeline">
 		</div>
-	
+		
 		<div id = "F_T">
 		</div>
-		<div class = "timeline">
+		
 	</div>
 </body>
 </html>
