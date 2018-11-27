@@ -119,30 +119,36 @@ function plot(data){
          var label = d3.arc()
             .outerRadius(radius).innerRadius(radius - 80);
          
-         
+         var arcAttrs = {
+          cx: function(d) { return xScale(d.x); },
+          cy: function(d) { return yScale(d.y); }
+		 };
             
             var arc = g.selectAll(".arc")
                .data(pie(data))
                .enter()
                .append("g")
-               .attr("class", "arc");
+               .attr("class", "arc",arcAttrs)
+			   .on("mouseover", handleMouseOver)
+			   .on("mouseout", handleMouseOut);
             
             arc.append("path")
                .attr("d", path)
                .attr("fill", function(d) { return color(d.data.repo_name); });
         
             console.log(arc)
-        
+        /*
             arc.append("text").attr("transform", function(d) { 
                return "translate(" + label.centroid(d) + ")"; 
             })
             
             .text(function(d) { return d.data.repo_name; });
         
-         
+			
          svg.append("g")
             .attr("transform", "translate(" + (width / 2 - 120) + "," + 100 + ")")
             .append("text").text("Commits in repos")
             .attr("class", "title")
+			*/
 }
 

@@ -44,7 +44,9 @@ body{
 svg rect {
    fill: purple;
 }
-
+#arc{
+	background-color:white
+}
 .arc text {
             font: 12px arial;
             text-anchor: middle;
