@@ -7,7 +7,7 @@ enter a github username into the searchbar to query the api
 
 ![Alt text](https://github.com/kinselc3/CS3012-GitHub-API/blob/master/readmeimages/1.PNG?raw=true"1")
 
-The webpage will load a piechart showing some basic information as well as all of the user's repos and the number of commits within them
+The webpage will load a table showing some basic information as well as a piechart all of the user's repos and the number of commits within them
 
 ![Alt text](https://github.com/kinselc3/CS3012-GitHub-API/blob/master/readmeimages/4.PNG?raw=true"1")
 
