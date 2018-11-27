@@ -44,3 +44,17 @@ body{
 svg rect {
    fill: purple;
 }
+
+.arc text {
+            font: 12px arial;
+            text-anchor: middle;
+         }
+         
+         .arc path {
+            stroke: #fff;
+         }
+        
+        .title {
+            fill: green;
+            font-weight: italic;
+         }

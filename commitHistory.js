@@ -9,16 +9,29 @@ function getData(obj){
 	
 	var repos = retrieveJson(obj.repos_url);
 	var commits = [];
+	var commit_count =0;
 	//var data = JSON.parse(obj[0]);
 	console.log(repos.length);
 	var returnData=[];
+//	var j = 2;
 	for(var i = 0 ; i<repos.length;i++)
 	{
-		c_url =repos[i].commits_url.substring(0,repos[i].commits_url.length-6);
+		c_url =repos[i].commits_url.substring(0,repos[i].commits_url.length-6) + "?per_page=100";
+		
 		commits = retrieveJson(c_url);
+		commit_count += commits.length;
+		/*while(commits != [])
+		{
 		//console.log(retrieveJson(c_url));
-		console.log(commits);
-	returnData.push({"repo_name":repos[i].name, "commits":commits.length});
+			console.log(commits);
+			c_url += repos[i].commits_url.substring(0,repos[i].commits_url.length-6) + "?page="+j+"&per_page=100";
+			commit = retrieveJson(c_url);
+			commit_count += commits.length
+			j++;
+		}
+		*/
+		returnData.push({"repo_name":repos[i].name, "commits":commits.length});
+		//j= 2;
 		/*
 		for(var j = 0 ; j<commits.length;j++)
 		{
@@ -34,7 +47,7 @@ function getData(obj){
 function plot(data){
 	var names=[];
 	var	commits=[];
-	console.log(data[0].repo_name);
+	console.log(data);
 	for(var i = 0 ; i<data.length ; i ++)
 	{
 		names[i]=data[i].repo_name;
@@ -42,10 +55,14 @@ function plot(data){
 	}
 	
 	console.log(names[0]);
-	d3.select("svg").remove();
+	//d3.select("svg").remove();
+	
 		//////////////////////
-         var width = 1000 
-            scaleFactor = 20, 
+         var width = 400;
+		 var height = 400; 
+           
+
+/*		   scaleFactor = 20, 
             barHeight = 30;
          
          var graph = d3.select(".timeline")
@@ -75,6 +92,57 @@ function plot(data){
 		bar.append("text")
             .attr("y", (barHeight/2)+barHeight )
 			.data(names)
+
 			.text(function(d) { return d; });
+			*/
+
+		console.log(data);
+         var svg = d3.select("svg"),
+            width = svg.attr("width"),
+            height = svg.attr("height"),
+            radius = Math.min(width, height) / 2;
+        
+         var g = svg.append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+         var color = d3.scaleOrdinal([
+            'gray', 'green', 'brown', 'orange', 'yellow', 'red', 'purple'
+         ]);
+         
+         var pie = d3.pie().value(function(d) { 
+            return d.commits; 
+         });
+         
+         var path = d3.arc()
+            .outerRadius(radius - 10).innerRadius(0);
+        
+         var label = d3.arc()
+            .outerRadius(radius).innerRadius(radius - 80);
+         
+         
+            
+            var arc = g.selectAll(".arc")
+               .data(pie(data))
+               .enter()
+               .append("g")
+               .attr("class", "arc");
+            
+            arc.append("path")
+               .attr("d", path)
+               .attr("fill", function(d) { return color(d.data.repo_name); });
+        
+            console.log(arc)
+        
+            arc.append("text").attr("transform", function(d) { 
+               return "translate(" + label.centroid(d) + ")"; 
+            })
+            
+            .text(function(d) { return d.data.repo_name; });
+        
+         
+         svg.append("g")
+            .attr("transform", "translate(" + (width / 2 - 120) + "," + 100 + ")")
+            .append("text").text("Commits in repos")
+            .attr("class", "title")
 }
 
