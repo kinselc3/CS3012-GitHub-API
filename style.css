@@ -1,4 +1,4 @@
-
+/* colours and sizes for content of button and text values*/
 #basicContents{
 	background-color: DarkViolet;
 	height: 200px;
@@ -15,7 +15,7 @@
 }
 
 #follower{
-	
+
 }
 
 #avatar{
@@ -33,7 +33,7 @@ body{
 	background-color: Thistle;
     max-width:70%;
     margin: auto;
-	
+
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -41,6 +41,7 @@ body{
 	background-color:white;
 }
 
+/* diagrams and charts styling*/
 svg rect {
    fill: purple;
 }
@@ -51,11 +52,11 @@ svg rect {
             font: 12px arial;
             text-anchor: middle;
          }
-         
+
          .arc path {
             stroke: #fff;
          }
-        
+
         .title {
             fill: green;
             font-weight: italic;
